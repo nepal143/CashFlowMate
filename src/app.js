@@ -25,8 +25,8 @@ app.use(
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.render("index", { title: "Your Page Title" });
+app.get('/', (req, res) => {
+  res.render('index', { title: 'Your Page Title', user: req.session.user });
 });
 
 // Registration page
@@ -49,7 +49,7 @@ app.get("/logout", (req, res) => {
 // Registration POST request
 app.post("/register", async (req, res) => {
   const { username, password } = req.body;
-  console.log(req.body);
+
 
   try {
     // Check if the user already exists
@@ -97,10 +97,10 @@ app.post("/login", async (req, res) => {
     console.log("login sucessfully") ; 
     res.redirect("/");
   } catch (error) {
-    console.error(error);
+    console.error(error);  
     res.render("login", { error: "Login failed" });
   }
-});
+});   
 
 // db connection
 const uri = "mongodb+srv://nepalsss008:nepalsingh@cluster0.sutmgl0.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp"; // Replace with your MongoDB Atlas URI
