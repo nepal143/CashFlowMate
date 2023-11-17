@@ -1,0 +1,24 @@
+<!-- views/history.hbs -->
+<!DOCTYPE html>
+<html lang="en">
+{{> header}}
+
+<body>
+    <h2>Transaction History for {{user}}</h2>
+
+    {{#if historyTransactions.length}}
+        <ul>
+            {{#each historyTransactions}}
+                <li>
+                    Amount: {{amount}}, Type: {{type}}, Date: {{formatDate dateTime}}, Note: {{note}}
+                </li>
+            {{/each}}
+        </ul>
+    {{else}}
+        <p>No history transactions found.</p>
+    {{/if}}
+
+    <a href="/">Back to Home</a>
+</body>
+
+</html>

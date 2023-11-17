@@ -1,0 +1,58 @@
+<!-- views/transaction.hbs -->
+
+{{> header}}
+
+<body>
+    <div class="container">
+        <h2>Transaction History</h2>
+        <div class="transaction-list">
+            <ul>
+                {{#each transactions}}
+                <li>
+                    <strong>{{this.amount}}</strong>
+                    <span>{{this.type}}</span>
+                    <p>{{this.note}}</p>
+                    <p>{{formatDate this.createdAt}}</p>
+                    <a href="/delete-transaction/{{this._id}}">Delete</a>
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+
+        <h2>Add Transaction</h2>
+        <form action="/add-transaction" method="post">
+            <label for="personId">Select Person:</label>
+            <select name="personId" id="personId" required>
+                {{#each persons}}
+                    <option value="{{this._id}}">{{this.name}}</option>
+                {{/each}}
+            </select>
+            <br>
+                            {{#each persons}}
+                    <option value="{{this._id}}">{{this.name}}</option>
+                {{/each}}
+            
+
+            <label for="amount">Amount:</label>
+            <input type="text" id="amount" name="amount" required>
+            <br>
+
+            <label for="type">Type:</label>
+            <select name="type" id="type" required>
+                <option value="income">Income</option>
+                <option value="expense">Expense</option>
+            </select>
+            <br>
+
+            <label for="note">Note:</label>
+            <input type="text" id="note" name="note">
+            <br>
+
+            <input type="submit" value="Add Transaction">
+        </form>
+
+        <a href="/logout">Logout</a>
+    </div>
+</body>
+
+</html>

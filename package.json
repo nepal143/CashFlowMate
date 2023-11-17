@@ -6,7 +6,10 @@
     "express-handlebars": "^7.1.2",
     "express-session": "^1.17.3",
     "hbs": "^4.2.0",
-    "mongoose": "^8.0.1"
+    "moment": "^2.29.4",
+    "mongoose": "^8.0.1",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0"
   },
   "scripts": {
     "dev": "nodemon src/app.js -e js,hbs"

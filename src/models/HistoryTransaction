@@ -1,0 +1,14 @@
+
+const mongoose = require('mongoose');
+
+const historyTransactionSchema = new mongoose.Schema({
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    amount: Number,
+    type: { type: String, enum: ['income', 'expense'] },  
+    dateTime: { type: Date, default: Date.now },
+    note: String,
+});
+
+const HistoryTransaction = mongoose.model('HistoryTransaction', historyTransactionSchema);
+
+module.exports = HistoryTransaction;

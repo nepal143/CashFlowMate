@@ -1,0 +1,115 @@
+<!-- views/see-transactions.hbs -->
+
+{{> header}}
+
+<body>
+    <div class="container">
+        <h2>Transaction History</h2>
+
+        <label for="personFilter">Select Person:</label>
+        <select id="personFilter">
+            <option value="">All Persons</option>
+            {{#each persons}}
+            <option value="{{this.name}}">{{this.name}}</option>
+            {{/each}}
+        </select>
+
+        <div class="transaction-list">
+            <ul id="transactionList">
+                {{#each transactions}} 
+                <li data-person="{{this.personId.name}}">
+                    <strong>{{this.amount}}</strong>
+                    <span>{{this.type}}</span>
+                    <p>{{this.note}}</p>
+                    <p>{{formatDate this.createdAt}}</p>
+                    <p>Person: {{this.personId.name}}</p>
+                   <a href="/delete-transaction/{{this._id}}" method="post">Delete</a>
+                </li>
+                {{/each}}
+
+            </ul>
+        </div>
+        
+        <h2>Add Transaction</h2>
+        <form action="/add-transaction" method="post">
+            <label for="personId">Select Person:</label>
+            <select name="personId" id="personId" required>
+                {{#each persons}}
+                    <option value="{{this._id}}">{{this.name}}</option>
+                {{/each}}
+            </select>
+            <br>
+                            {{#each persons}}
+                    <option value="{{this._id}}">{{this.name}}</option>
+                {{/each}}
+            
+
+            <label for="amount">Amount:</label>
+            <input type="text" id="amount" name="amount" required>
+            <br>
+
+            <label for="type">Type:</label>
+            <select name="type" id="type" required>
+                <option value="income">Income</option>
+                <option value="expense">Expense</option>
+            </select>
+            <br>
+
+            <label for="note">Note:</label>
+            <input type="text" id="note" name="note">
+            <br>
+
+            <input type="submit" value="Add Transaction">
+        </form>
+
+        <a href="/logout">Logout</a>
+    </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const personFilter = document.getElementById('personFilter');
+    const transactionList = document.getElementById('transactionList');
+
+    // Add an input event listener for real-time filtering
+    personFilter.addEventListener('change', function () {
+      const selectedPerson = personFilter.value.toLowerCase();
+      const transactions = transactionList.querySelectorAll('li');
+
+      transactions.forEach(transaction => {
+        const transactionPerson = transaction.getAttribute('data-person').toLowerCase();
+        const isVisible = selectedPerson === '' || transactionPerson.includes(selectedPerson);
+
+        // Toggle visibility based on the selected person
+        transaction.style.display = isVisible ? 'list-item' : 'none';
+      });
+    });
+  });
+
+  async function confirmDelete(transactionId) {
+    const isConfirmed = confirm('Are you sure you want to delete this transaction?');
+
+    if (isConfirmed) {
+      try {
+        // Send a POST request to delete the transaction
+        const response = await fetch(`/delete-transaction/${transactionId}`, {
+          method: 'POST',
+        });
+
+        // Check if the request was successful
+        if (response.ok) {
+          // Redirect to /see-transaction after successful deletion
+         window.location.href = '/see-transactions';
+        } else {
+          console.error('Failed to delete transaction:', response.statusText);
+          // Handle the error (e.g., show an error message)
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        // Handle the error (e.g., show an error message)
+      }
+    }
+  }
+</script>
+</body>
+
+</html>
