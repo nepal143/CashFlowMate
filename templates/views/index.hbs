@@ -5,8 +5,8 @@
 <body>
     {{#if user}}
         <!-- User is logged in, show logout button -->
-        <p>Welcome, {{user}}!</p>
-        <a href="/transaction">Transaction History</a>
+        <p>Welcome, {{user.username}}!</p>
+        {{!-- <a href="/transaction">Transaction History</a> --}}
         <form action="/logout" method="get">
             <input type="submit" value="Logout">
         </form>

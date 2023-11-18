@@ -181,7 +181,7 @@ app.get('/see-transactions', isAuthenticated, async (req, res) => {
 
 
 
-
+  
 app.post("/delete-transaction/:id", isAuthenticated, async (req, res) => {
   try {
     const transactionId = req.params.id;
@@ -195,12 +195,12 @@ app.post("/delete-transaction/:id", isAuthenticated, async (req, res) => {
     const historyTransaction = new HistoryTransaction(deletedTransaction.toObject());
     await historyTransaction.save();
 
-    res.redirect("/see-transaction");
+    res.redirect("/see-transactions");
   } catch (error) {
     console.error(error);
     res.render("error", { error: "Failed to delete transaction" });
   }
-});
+}); 
 
 
 // app.js

@@ -23,7 +23,8 @@
                     <p>{{this.note}}</p>
                     <p>{{formatDate this.createdAt}}</p>
                     <p>Person: {{this.personId.name}}</p>
-                   <a href="/delete-transaction/{{this._id}}" method="post">Delete</a>
+                   <button onclick="confirmDelete('{{this._id}}')">Delete</button>
+
                 </li>
                 {{/each}}
 
@@ -39,9 +40,7 @@
                 {{/each}}
             </select>
             <br>
-                            {{#each persons}}
-                    <option value="{{this._id}}">{{this.name}}</option>
-                {{/each}}
+  
             
 
             <label for="amount">Amount:</label>
@@ -85,7 +84,7 @@
     });
   });
 
-  async function confirmDelete(transactionId) {
+ async function confirmDelete(transactionId) {
     const isConfirmed = confirm('Are you sure you want to delete this transaction?');
 
     if (isConfirmed) {
@@ -97,8 +96,8 @@
 
         // Check if the request was successful
         if (response.ok) {
-          // Redirect to /see-transaction after successful deletion
-         window.location.href = '/see-transactions';
+          // Redirect to /see-transactions after successful deletion
+          window.location.href = '/see-transactions';
         } else {
           console.error('Failed to delete transaction:', response.statusText);
           // Handle the error (e.g., show an error message)
@@ -108,7 +107,7 @@
         // Handle the error (e.g., show an error message)
       }
     }
-  }
+  } 
 </script>
 </body>
 
