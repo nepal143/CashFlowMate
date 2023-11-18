@@ -3,68 +3,133 @@
 {{> header}}
 
 <body>
-    <div class="container">
-        <h2>Transaction History</h2>
+    <div class="see-transactions-container" style="max-width: 70vw; margin: 0 auto; padding: 20px; box-sizing: border-box;">
+        <h2 style="color: #00aaff;">Transaction History</h2>
+        <h2>Total Money: <span id="totalMoney" style="color: #00aaff;"></span></h2>
 
-        <label for="personFilter">Select Person:</label>
-        <select id="personFilter">
+        <div class="selectoradd">
+          <div class="lable">
+        <label for="personFilter" style="margin-top: 10px;">Select Person:</label>
+        <select id="personFilter" style="padding: 5px; margin-bottom: 15px;"> 
+
             <option value="">All Persons</option>
+
             {{#each persons}}
             <option value="{{this.name}}">{{this.name}}</option>
             {{/each}}
+
         </select>
+        </div>
+        <input type="button" style="padding: 8px; background-color: #00aaff; color: #fff; border: none; border-radius: 5px; cursor: pointer;" value="Add +" onclick="Openadd()">
+        </div>
 
         <div class="transaction-list">
-            <ul id="transactionList">
+            <ul id="transactionList" style="list-style: none; padding: 0;">
                 {{#each transactions}} 
-                <li data-person="{{this.personId.name}}">
+                <li data-person="{{this.personId.name}}" style="border: 1px solid #555; border-radius: 5px; margin-bottom: 10px; padding: 10px; background-color: #444;">
                     <strong>{{this.amount}}</strong>
                     <span>{{this.type}}</span>
                     <p>{{this.note}}</p>
                     <p>{{formatDate this.createdAt}}</p>
                     <p>Person: {{this.personId.name}}</p>
-                   <button onclick="confirmDelete('{{this._id}}')">Delete</button>
-
+                    <button onclick="confirmDelete('{{this._id}}')" style="padding: 8px; background-color: #ff4d4d; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Delete</button>
                 </li>
                 {{/each}}
-
             </ul>
         </div>
-        
-        <h2>Add Transaction</h2>
-        <form action="/add-transaction" method="post">
+        <div class="add-transactions">
+         <h2>Add Transaction</h2>
+        <form action="/add-transaction" method="post" style="margin-bottom: 20px;">
             <label for="personId">Select Person:</label>
-            <select name="personId" id="personId" required>
+            <select name="personId" id="personId" required style="padding: 5px;">
                 {{#each persons}}
-                    <option value="{{this._id}}">{{this.name}}</option>
+                <option value="{{this._id}}">{{this.name}}</option>
                 {{/each}}
             </select>
             <br>
-  
-            
 
             <label for="amount">Amount:</label>
-            <input type="text" id="amount" name="amount" required>
+            <input type="text" id="amount" name="amount" required style="padding: 8px; box-sizing: border-box; width: 100%;">
             <br>
 
             <label for="type">Type:</label>
-            <select name="type" id="type" required>
-                <option value="income">Income</option>
-                <option value="expense">Expense</option>
+            <select name="type" id="type" required style="padding: 5px;">
+                <option value="give">give</option>
+                <option value="take">take</option>
             </select>
             <br>
 
             <label for="note">Note:</label>
-            <input type="text" id="note" name="note">
+            <input type="text" id="note" name="note" style="padding: 8px; box-sizing: border-box; width: 100%;">
             <br>
 
-            <input type="submit" value="Add Transaction">
+            <input type="submit" value="Add Transaction" style="padding: 8px; background-color: #00aaff; color: #fff; border: none; border-radius: 5px; cursor: pointer;">
         </form>
+      </div>
 
-        <a href="/logout">Logout</a>
+        <div class="add-person">
+            <h2>Add Person</h2>
+            <form action="/add-person" method="post">
+                <label for="personName">Person Name:</label>
+                <input type="text" id="personName" name="personName" required style="padding: 8px; box-sizing: border-box; width: 100%;">
+                <br>
+
+                <input type="submit" value="Add Person" style="padding: 8px; background-color: #00aaff; color: #fff; border: none; border-radius: 5px; cursor: pointer;">
+            </form>
+        </div>
+
+        <a href="/" style="color: #00aaff; display: block; margin-top: 20px; text-decoration: none;">Back to Home</a>
+        <a href="/logout" style="color: #ff4d4d; display: block; margin-top: 10px; text-decoration: none;">Logout</a>
     </div>
 
 <script>
+     document.addEventListener('DOMContentLoaded', async function () {
+    const personFilter = document.getElementById('personFilter');
+    const transactionList = document.getElementById('transactionList');
+    const totalMoneyElement = document.getElementById('totalMoney');
+
+    // Function to update the total money based on transactions
+function updateTotalMoney(transactions) {
+  const totalMoney = transactions.reduce((sum, transaction) => {
+    console.log('Transaction:', transaction);
+    console.log('Type:', transaction.type);
+    console.log('Amount:', transaction.amount);
+ 
+    // Ensure that transaction.amount is a valid number
+    const amount = parseFloat(transaction.amount);
+    if (!isNaN(amount)) {
+      return transaction.type === 'give' ? sum + amount : sum - amount;
+    } else {
+      console.error('Invalid amount:', transaction.amount);
+      return sum;
+    }
+  }, 0);  
+
+  totalMoneyElement.textContent = totalMoney.toFixed(2);
+}
+
+    // Add an input event listener for real-time filtering
+    personFilter.addEventListener('change', function () {
+      const selectedPerson = personFilter.value.toLowerCase();
+      const transactions = transactionList.querySelectorAll('li');
+
+      const filteredTransactions = Array.from(transactions).filter(transaction => {
+        const transactionPerson = transaction.getAttribute('data-person').toLowerCase();
+        return selectedPerson === '' || transactionPerson.includes(selectedPerson);
+      });
+
+      // Update the total money based on filtered transactions
+      updateTotalMoney(filteredTransactions);
+    });
+
+    // Fetch all transactions
+    const response = await fetch('/api/transactions'); // Replace with your API endpoint
+    const transactions = await response.json();
+    console.log('All Transactions:', transactions);
+
+    // Update the total money based on all transactions initially
+    updateTotalMoney(transactions);
+  });
   document.addEventListener('DOMContentLoaded', function () {
     const personFilter = document.getElementById('personFilter');
     const transactionList = document.getElementById('transactionList');

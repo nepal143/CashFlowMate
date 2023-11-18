@@ -1,8 +1,151 @@
-body{
-    background-color: black ;
-    color: white;
+
+
+
+
+header h1 {
+    color: #00aaff; /* Accent color */
 }
-a{
+
+p {
+    margin-top: 10px;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #00aaff; /* Accent color */
+    color: #fff;
     text-decoration: none;
-    color: white;
+    border-radius: 5px;
+    margin:20px auto ;
+}
+
+
+
+
+/* login page  */
+
+
+
+
+h2 {
+    color: #00aaff; /* Accent color */
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    background-color: #00aaff; /* Accent color */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+/* register */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #333; /* Dark background color */
+    color: #fff; /* Light text color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* height: 100vh; */
+}
+.add-transactions{
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left:0;
+    position: absolute;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(66, 66, 66 ,0.8);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+.add-person{
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left:0;
+    position: absolute;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(66, 66, 66 ,0.8);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+
+
+h2 {
+    color: #00aaff; /* Accent color */
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    background-color: #00aaff; /* Accent color */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.see-transactions-container{
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    /* justify-content: center; */
+    align-items: center;
+    flex-direction: column;
+}
+.selectoradd{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.selectoradd input{
+    width: 100px;
+}
+.lable{
+    display: flex;
+    justify-content: center;
+
+}
+#transactionList{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }

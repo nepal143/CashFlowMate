@@ -146,16 +146,7 @@ function isAuthenticated(req, res, next) {
   res.redirect("/login");
 }
 
-app.get("/transaction", isAuthenticated, async (req, res) => {
-  try {
-    const userId = req.user._id;
-    const transactions = await Transaction.find({ userId });
-    res.render("transaction", { user: req.user.username, transactions });
-  } catch (error) {
-    console.error(error);
-    res.render("error", { error: "Failed to fetch transactions" });
-  }
-});
+
 // app.js
 
 // app.js
@@ -218,7 +209,7 @@ app.post('/add-transaction', isAuthenticated, async (req, res) => {
     const newTransaction = new Transaction({ userId, personId, amount, type, note });
     await newTransaction.save();
 
-    res.redirect('/transaction');
+    res.redirect('/see-transactions');
   } catch (error) {
     console.error(error);
     res.render('error', { error: 'Failed to add transaction' });
@@ -248,12 +239,10 @@ app.post("/add-person", isAuthenticated, async (req, res) => {
   const { personName } = req.body;
 
   try {
-    // Save the person to the database
-    // Assuming you have a Person model
     const newPerson = new Person({ name: personName, userId: req.user._id });
     await newPerson.save();
     console.log(newPerson);
-    res.redirect('/add-person'); // Redirect to home after adding the person
+    res.redirect('/see-transactions'); // Redirect to home after adding the person
   } catch (error) {
     console.error(error);
     res.render('error', { error: 'Failed to add person' });

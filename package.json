@@ -12,6 +12,6 @@
     "passport-local": "^1.0.0"
   },
   "scripts": {
-    "dev": "nodemon src/app.js -e js,hbs"
+    "dev": "node src/app.js -e js,hbs"
   }
 }

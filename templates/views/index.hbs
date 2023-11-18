@@ -3,20 +3,24 @@
 {{> header}}
 
 <body>
-    {{#if user}}
-        <!-- User is logged in, show logout button -->
-        <p>Welcome, {{user.username}}!</p>
-        {{!-- <a href="/transaction">Transaction History</a> --}}
-        <form action="/logout" method="get">
-            <input type="submit" value="Logout">
-        </form>
-    {{else}}
-        <!-- User is not logged in, show login button -->
-        <p>You are not logged in. Please log in.</p>
-        <a href="/login">Login</a>
-        <a href="/register">Register</a>
-    {{/if}}
-    <!-- Main content of the page -->
+    <div class="container">
+        <header>
+            <h1>Welcome to Your Financial Tracker</h1>
+            <p>Take control of your finances with our easy-to-use tracking system. Sign up or log in now to get started!</p>
+        </header>
+
+        {{#if user}}
+            <!-- User is logged in, show view transactions button -->
+            <a href="/see-transactions" class="cta-button">View Transactions</a>
+            <form action="/logout" method="get">
+                <input type="submit" value="Logout">
+            </form>
+        {{else}}
+            <!-- User is not logged in, show signup and login buttons -->
+            <a href="/register" class="cta-button">Sign Up</a>
+            <a href="/login" class="cta-button">Login</a>
+        {{/if}}
+    </div>
 </body>
 
 </html>
