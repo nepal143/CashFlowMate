@@ -3,13 +3,13 @@
 {{> header}}
 
 <body>
+     {{> navbar}}
     <div class="see-transactions-container" style="max-width: 70vw; margin: 0 auto; padding: 20px; box-sizing: border-box;">
         <h2 style="color: #00aaff;">Transaction History</h2>
         <h2>Total Money: <span id="totalMoney" style="color: #00aaff;"></span></h2>
 
         <div class="selectoradd">
           <div class="lable">
-        <label for="personFilter" style="margin-top: 10px;">Select Person:</label>
         <select id="personFilter" style="padding: 5px; margin-bottom: 15px;"> 
 
             <option value="">All Persons</option>
@@ -26,8 +26,8 @@
         <div class="transaction-list">
             <ul id="transactionList" style="list-style: none; padding: 0;">
                 {{#each transactions}} 
-                <li data-person="{{this.personId.name}}" style="border: 1px solid #555; border-radius: 5px; margin-bottom: 10px; padding: 10px; background-color: #444;">
-                    <strong>{{this.amount}}</strong>
+                <li data-person="{{this.personId.name}}" style="border: 1px solid #555; border-radius: 5px; margin: 15px; padding: 10px; background-color: #444;">
+                    <strong>{{this.amount}}</strong> 
                     <span>{{this.type}}</span>
                     <p>{{this.note}}</p>
                     <p>{{formatDate this.createdAt}}</p>

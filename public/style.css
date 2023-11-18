@@ -63,8 +63,11 @@ body {
     background-color: #333; /* Dark background color */
     color: #fff; /* Light text color */
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow-x: hidden;
+    text-align: center;
     /* height: 100vh; */
 }
 .add-transactions{
@@ -125,7 +128,8 @@ input[type="submit"] {
 }
 .see-transactions-container{
     display: flex;
-    width: 100vw;
+    /* width: 100vw; */
+    padding: 10px;
     height: 100vh;
     /* justify-content: center; */
     align-items: center;
@@ -135,6 +139,7 @@ input[type="submit"] {
     display: flex;
     justify-content: space-between;
     width: 100%;
+    padding: 10px;
 }
 .selectoradd input{
     width: 100px;
@@ -148,4 +153,27 @@ input[type="submit"] {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+}
+nav{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+
+}
+nav ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+}
+nav ul a{
+    margin:10px  40px;
+    text-decoration: none;
+    color: white;
+}
+@media (max-width:800px) {
+    nav{
+        display: none;
+    }
+    
 }
